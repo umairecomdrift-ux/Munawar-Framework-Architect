@@ -1,0 +1,20 @@
+{
+  "name": "munawar-wisdom-framework-generator",
+  "version": "1.0.0",
+  "description": "AI-powered wealth, wisdom, and lifestyle framework generator",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "start": "python -m http.server 8000"
+  },
+  "keywords": [
+    "wealth",
+    "wisdom",
+    "lifestyle",
+    "investment",
+    "framework",
+    "ai"
+  ],
+  "author": "Munawar",
+  "license": "MIT"
+}
