@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Munawar Framework Architect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            color: #1a202c;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .navbar {
+            background: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: #1a202c;
+            letter-spacing: -0.3px;
+        }
+
+        .logo-subtitle {
+            font-size: 11px;
+            color: #718096;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .priority-key-btn {
+            padding: 8px 16px;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            color: #667eea;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .priority-key-btn:hover {
+            background: #edf2f7;
+            border-color: #cbd5e0;
+        }
+
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .hero-title {
+            font-size: 56px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+        }
+
+        .hero-title .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .hero-title .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0.3;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: #718096;
+            font-weight: 400;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .input-card {
+            background: white;
+            border-radius: 20px;
+            padding: 0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            margin-bottom: 30px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .input-card.focused {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-wrapper {
+            position: relative;
+            padding: 30px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 20px;
+            border: none;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            resize: none;
+            min-height: 140px;
+            color: #2d3748;
+            line-height: 1.6;
+            background: transparent;
+        }
+
+        textarea::placeholder {
+            color: #cbd5e0;
+        }
+
+        textarea:focus {
+            outline: none;
+        }
+
+        .submit-btn {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .submit-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .powered-by {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #667eea;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .powered-by svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .info-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .info-icon {
+            width: 36px;
+            height: 36px;
+            background: #ebf4ff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+        }
+
+        .info-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a202c;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-content {
+            font-size: 15px;
+            color: #4a5568;
+            line-height: 1.7;
+            margin-left: 48px;
+        }
+
+        .output-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: none;
+        }
+
+        .output-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .output-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .download-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .download-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .download-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .download-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .framework-section {
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .framework-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .framework-section h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 16px;
+            letter-spacing: -0.3px;
+        }
+
+        .framework-section h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        .framework-section p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #4a5568;
+            margin-bottom: 16px;
+        }
+
+        .framework-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .framework-section li {
+            padding-left: 28px;
+            position: relative;
+            margin-bottom: 14px;
+            line-height: 1.7;
+            color: #4a5568;
+            font-size: 15px;
+        }
+
+        .framework-section li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .framework-item {
+            background: #f7fafc;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            border-left: 3px solid #667eea;
+        }
+
+        .decision-rule {
+            background: #ebf4ff;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border-left: 3px solid #4299e1;
+            font-size: 15px;
+            color: #2c5282;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 40px;
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 20px;
+            border: 3px solid #e2e8f0;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 15px;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .error-message {
+            background: #fff5f5;
+            color: #c53030;
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin: 20px 30px;
+            display: none;
+            font-size: 14px;
+            border-left: 3px solid #fc8181;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            padding: 0 30px 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #718096;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: #f7fafc;
+            border-color: #cbd5e0;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 16px 20px;
+            }
+
+            .main-container {
+                padding: 40px 20px;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .input-wrapper {
+                padding: 20px;
+            }
+
+            .submit-btn {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .output-section {
+                padding: 24px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-icon">M</div>
+            <div class="logo-text">
+                <div class="logo-title">MUNAWAR</div>
+                <div class="logo-subtitle">ARCHITECT</div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="priority-key-btn" onclick="window.scrollTo({top: document.querySelector('.info-section').offsetTop - 100, behavior: 'smooth'})">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16" height="16">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                PRIORITY KEY
+            </button>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="hero-section">
+            <h1 class="hero-title">Framework <span class="highlight">Architect.</span></h1>
+            <p class="hero-subtitle">Clean, high-speed reasoning for wealth and lifestyle systems using Claude Sonnet 4.</p>
+        </div>
+
+        <div class="input-card" id="inputCard">
+            <div class="input-wrapper">
+                <textarea 
+                    id="topic" 
+                    placeholder="Define the problem or asset class... (e.g., 'Navigating Bitcoin Volatility', 'Early Retirement for Software Engineers'...)"
+                ></textarea>
+                <button class="submit-btn" id="submitBtn">
+                    <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="error-message" id="errorMessage"></div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="generateBtn">Generate Framework</button>
+                <button class="btn btn-secondary" id="clearBtn">Clear</button>
+            </div>
+        </div>
+
+        <div class="powered-by">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+                <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            POWERED BY DEEP REASONING
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div class="loading-text">Generating wisdom frameworks...</div>
+        </div>
+
+        <div class="output-section" id="output">
+            <div class="output-header">
+                <h2 class="output-title">Your Framework</h2>
+                <button class="download-btn" id="downloadBtn">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    Download PDF
+                </button>
+            </div>
+            <div id="outputContent"></div>
+        </div>
+
+        <div class="info-section">
+            <div class="info-header">
+                <div class="info-icon">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20" height="20">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4m0-4h.01"/>
+                    </svg>
+                </div>
+                <h3 class="info-title">Philosophy</h3>
+            </div>
+            <p class="info-content">
+                Solving for decades, not months. Every framework is built with systemic logic and long-term rational principles.
+            </p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        // Demo mode - shows example output without API
+        const DEMO_MODE = true;
+        
+        let currentFrameworkText = '';
+        let currentTopicTitle = '';
+
+        const inputCard = document.getElementById('inputCard');
+        const topic = document.getElementById('topic');
+        
+        topic.addEventListener('focus', () => inputCard.classList.add('focused'));
+        topic.addEventListener('blur', () => inputCard.classList.remove('focused'));
+
+        document.getElementById('generateBtn').addEventListener('click', generateFramework);
+        document.getElementById('submitBtn').addEventListener('click', generateFramework);
+        document.getElementById('clearBtn').addEventListener('click', clearAll);
+        document.getElementById('downloadBtn').addEventListener('click', downloadPDF);
+        
+        topic.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && e.ctrlKey) generateFramework();
+        });
+
+        async function generateFramework() {
+            const topicValue = topic.value.trim();
+            const errorMessage = document.getElementById('errorMessage');
+            const loading = document.getElementById('loading');
+            const output = document.getElementById('output');
+            const outputContent = document.getElementById('outputContent');
+            const generateBtn = document.getElementById('generateBtn');
+            const submitBtn = document.getElementById('submitBtn');
+
+            errorMessage.classList.remove('active');
+            errorMessage.textContent = '';
+
+            if (!topicValue) {
+                showError('Please enter a topic or question.');
+                return;
+            }
+
+            currentTopicTitle = topicValue;
+            generateBtn.disabled = true;
+            submitBtn.disabled = true;
+            loading.classList.add('active');
+            output.classList.remove('active');
+            outputContent.innerHTML = '';
+
+            try {
+                if (DEMO_MODE) {
+                    // Show demo response
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    const response = getDemoResponse(topicValue);
+                    currentFrameworkText = response;
+                    displayOutput(response);
+                } else {
+                    // Real API call (requires authentication)
+                    const prompt = buildPrompt(topicValue);
+                    const response = await callClaude(prompt);
+                    currentFrameworkText = response;
+                    displayOutput(response);
+                }
+            } catch (error) {
+                showError('Failed to generate framework. Please try again.');
+                console.error(error);
+            } finally {
+                generateBtn.disabled = false;
+                submitBtn.disabled = false;
+                loading.classList.remove('active');
+            }
+        }
+
+        function getDemoResponse(topic) {
+            return `1. TOPIC SUMMARY
+
+This topic addresses ${topic}, which matters because it directly impacts long-term financial security and lifestyle design. Understanding the principles behind this helps avoid common behavioral mistakes and build sustainable wealth over decades.
+
+2. CORE WISDOM FRAMEWORKS (3–5)
+
+The Compound Effect Framework:
+- Small, consistent actions compound exponentially over time
+- The first years show minimal results, creating false urgency
+- Patience becomes the ultimate competitive advantage
+- Most people quit before compounding becomes visible
+
+The Risk-Adjusted Return Principle:
+- Higher returns always come with proportional risk
+- Focus on risk management first, returns second
+- Diversification reduces unsystematic risk without sacrificing returns
+- Time in the market beats timing the market
+
+The Lifestyle Inflation Trap:
+- Income increases rarely translate to wealth increases
+- Each lifestyle upgrade creates a new baseline expectation
+- Widening the gap between earnings and spending creates freedom
+- Delayed gratification builds optionality
+
+3. MENTAL MODELS (2–3)
+
+Second-Order Thinking:
+Consider consequences beyond the immediate result. Every financial decision creates ripple effects. Ask: "And then what?" repeatedly to see the full picture.
+
+Opportunity Cost:
+Every choice means saying no to alternatives. Money spent on consumption can't compound. Time spent on low-value work can't be recovered. Choose wisely.
+
+4. DECISION RULES (3–5)
+
+If emotional, delay the decision 24-48 hours before acting.
+Never invest money you'll need within 5 years.
+Always automate savings before spending decisions.
+If it sounds too good to be true, it definitely is.
+Never make permanent decisions based on temporary emotions.
+
+5. LIFESTYLE TRADE-OFFS
+
+Time vs Money: Early career demands time investment for skill building. Later career trades specialized time for higher compensation. Choose your phase deliberately.
+
+Freedom vs Security: Job security provides stability but limits upside. Entrepreneurship offers unlimited upside with higher risk. Most need both at different life stages.
+
+Growth vs Comfort: Comfort zones preserve energy but limit development. Controlled discomfort drives capability expansion. Balance is individual and temporal.
+
+6. LONG-TERM PERSPECTIVE
+
+The next 10-20 years matter more than the next 10-20 months. Consistency compounds. Intensity burns out. Build systems that sustain themselves without constant willpower. Think in decades, act in days, measure in years.`;
+        }
+
+        function buildPrompt(topicValue) {
+            return `You are Munawar, a Wealth, Wisdom & Lifestyle Architect and long-term investor.
+
+The user has entered this topic: "${topicValue}"
+
+Provide a comprehensive framework following this EXACT structure:
+
+1. TOPIC SUMMARY
+2. CORE WISDOM FRAMEWORKS (3–5)
+3. MENTAL MODELS (2–3)
+4. DECISION RULES (3–5)
+5. LIFESTYLE TRADE-OFFS
+6. LONG-TERM PERSPECTIVE
+
+STRICT RULES:
+- Do NOT provide financial guarantees
+- Do NOT mention specific stocks, crypto, or price targets
+- Do NOT use hype language
+- Clarity over cleverness
+- Calm, authoritative, structured tone`;
+        }
+
+        async function callClaude(prompt) {
+            const response = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    model: 'claude-sonnet-4-20250514',
+                    max_tokens: 4000,
+                    messages: [{ role: 'user', content: prompt }]
+                })
+            });
+
+            if (!response.ok) throw new Error('API request failed');
+
+            const data = await response.json();
+            return data.content.filter(item => item.type === 'text').map(item => item.text).join('\n');
+        }
+
+        function displayOutput(text) {
+            const output = document.getElementById('output');
+            const outputContent = document.getElementById('outputContent');
+            
+            const formatted = formatResponse(text);
+            outputContent.innerHTML = formatted;
+            output.classList.add('active');
+            
+            output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function formatResponse(text) {
+            let html = '';
+            const sections = text.split(/\d+\.\s+[A-Z\s]+(?:\([^)]+\))?/g).filter(s => s.trim());
+            const titles = text.match(/\d+\.\s+[A-Z\s]+(?:\([^)]+\))?/g) || [];
+
+            sections.forEach((section, index) => {
+                if (index === 0 && section.trim()) {
+                    html += `<div class="framework-section"><p>${escapeHtml(section.trim())}</p></div>`;
+                    return;
+                }
+
+                const title = titles[index - 1] ? titles[index - 1].replace(/^\d+\.\s+/, '').trim() : '';
+                
+                if (!title) return;
+
+                html += `<div class="framework-section">`;
+                html += `<h2>${escapeHtml(title)}</h2>`;
+
+                const content = section.trim();
+                const paragraphs = content.split('\n\n');
+
+                paragraphs.forEach(para => {
+                    if (para.trim().startsWith('-') || para.trim().startsWith('•')) {
+                        const items = para.split('\n').filter(line => line.trim());
+                        html += '<ul>';
+                        items.forEach(item => {
+                            const cleaned = item.replace(/^[-•]\s*/, '').trim();
+                            if (cleaned) {
+                                if (cleaned.includes('If ') || cleaned.includes('Never ') || cleaned.includes('Always ')) {
+                                    html += `<div class="decision-rule">${escapeHtml(cleaned)}</div>`;
+                                } else if (cleaned.match(/^[A-Z][^:]+:/)) {
+                                    const [name, ...rest] = cleaned.split(':');
+                                    html += `<div class="framework-item"><h3>${escapeHtml(name)}</h3><p>${escapeHtml(rest.join(':').trim())}</p></div>`;
+                                } else {
+                                    html += `<li>${escapeHtml(cleaned)}</li>`;
+                                }
+                            }
+                        });
+                        html += '</ul>';
+                    } else if (para.trim()) {
+                        html += `<p>${escapeHtml(para.trim())}</p>`;
+                    }
+                });
+
+                html += '</div>';
+            });
+
+            return html;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorMessage.classList.add('active');
+        }
+
+        function clearAll() {
+            topic.value = '';
+            document.getElementById('output').classList.remove('active');
+            document.getElementById('outputContent').innerHTML = '';
+            document.getElementById('errorMessage').classList.remove('active');
+            currentFrameworkText = '';
+            currentTopicTitle = '';
+            topic.focus();
+        }
+
+        async function downloadPDF() {
+            if (!currentFrameworkText) {
+                showError('No framework to download. Please generate a framework first.');
+                return;
+            }
+
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.disabled = true;
+            downloadBtn.innerHTML = 'Generating...';
+
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                const pageWidth = doc.internal.pageSize.width;
+                const pageHeight = doc.internal.pageSize.height;
+                const margin = 20;
+                const maxWidth = pageWidth - (2 * margin);
+                let yPosition = margin;
+
+                doc.setFontSize(22);
+                doc.setFont(undefined, 'bold');
+                doc.text('Munawar Framework Architect', margin, yPosition);
+                yPosition += 10;
+
+                doc.setFontSize(16);
+                doc.setTextColor(102, 126, 234);
+                const topicLines = doc.splitTextToSize(currentTopicTitle, maxWidth);
+                doc.text(topicLines, margin, yPosition);
+                yPosition += (topicLines.length * 8) + 5;
+
+                doc.setDrawColor(226, 232, 240);
+                doc.line(margin, yPosition, pageWidth - margin, yPosition);
+                yPosition += 10;
+
+                doc.setTextColor(0, 0, 0);
+
+                const sections = currentFrameworkText.split(/\d+\.\s+[A-Z\s]+(?:\([^)]+\))?/g).filter(s => s.trim());
+                const titles = currentFrameworkText.match(/\d+\.\s+[A-Z\s]+(?:\([^)]+\))?/g) || [];
+
+                sections.forEach((section, index) => {
+                    if (index === 0 && !titles[index]) return;
+
+                    const title = titles[index - 1] ? titles[index - 1].replace(/^\d+\.\s+/, '').trim() : '';
+                    
+                    if (title) {
+                        if (yPosition > pageHeight - 40) {
+                            doc.addPage();
+                            yPosition = margin;
+                        }
+
+                        doc.setFontSize(14);
+                        doc.setFont(undefined, 'bold');
+                        doc.setTextColor(26, 32, 44);
+                        doc.text(title, margin, yPosition);
+                        yPosition += 8;
+
+                        doc.setFontSize(10);
+                        doc.setFont(undefined, 'normal');
+                        doc.setTextColor(74, 85, 104);
+
+                        const content = section.trim();
+                        const paragraphs = content.split('\n\n');
+
+                        paragraphs.forEach(para => {
+                            if (para.trim()) {
+                                if (yPosition > pageHeight - 30) {
+                                    doc.addPage();
+                                    yPosition = margin;
+                                }
+
+                                const lines = doc.splitTextToSize(para.trim(), maxWidth - 5);
+                                
+                                lines.forEach(line => {
+                                    if (yPosition > pageHeight - 20) {
+                                        doc.addPage();
+                                        yPosition = margin;
+                                    }
+                                    
+                                    if (para.trim().startsWith('-') || para.trim().startsWith('•')) {
+                                        doc.text('  • ' + line.replace(/^[-•]\s*/, ''), margin + 5, yPosition);
+                                    } else {
+                                        doc.text(line, margin + 5, yPosition);
+                                    }
+                                    yPosition += 6;
+                                });
+                                
+                                yPosition += 3;
+                            }
+                        });
+
+                        yPosition += 5;
+                    }
+                });
+
+                const totalPages = doc.internal.pages.length - 1;
+                for (let i = 1; i <= totalPages; i++) {
+                    doc.setPage(i);
+                    doc.setFontSize(8);
+                    doc.setTextColor(128, 128, 128);
+                    doc.text(
+                        `Page ${i} of ${totalPages} | Generated by Munawar Framework Architect`,
+                        pageWidth / 2,
+                        pageHeight - 10,
+                        { align: 'center' }
+                    );
+                }
+
+                const filename = `Munawar_Framework_${currentTopicTitle.substring(0, 30).replace(/[^a-z0-9]/gi, '_')}_${Date.now()}.pdf`;
+                
+                doc.save(filename);
+
+            } catch (error) {
+                console.error('PDF generation error:', error);
+                showError('Failed to generate PDF. Please try again.');
+            } finally {
+                downloadBtn.disabled = false;
+                downloadBtn.innerHTML = `
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    Download PDF
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
